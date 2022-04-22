@@ -1,3 +1,4 @@
+import 'package:firebase_chat_make/helper/authenticat.dart';
 import 'package:firebase_chat_make/screens/signin.dart';
 import 'package:firebase_chat_make/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +19,8 @@ class _ChatRoomState extends State<ChatRoom> {
         leading: IconButton(
             onPressed: () {
               auth.signOut();
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => const SignIn()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => const Authenticate()));
             },
             icon: const Icon(
               Icons.arrow_back,
