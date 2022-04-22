@@ -1,3 +1,4 @@
+import 'package:firebase_chat_make/screens/chatRoom.dart';
 import 'package:firebase_chat_make/screens/signUp.dart';
 import 'package:firebase_chat_make/widgets/myWidgets.dart';
 import 'package:flutter/material.dart';
@@ -98,11 +99,11 @@ class _SignInState extends State<SignIn> {
                 InkWell(
                   child: btns("Login"),
                   onTap: () {
-                    print("Login Tapped");
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => const ConversationPage()));
+                    // print("Login Tapped");
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ChatRoom()));
                     // print("Login Tapped");
                   },
                 ),
