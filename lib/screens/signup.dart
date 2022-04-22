@@ -7,10 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:validators/validators.dart';
 
 class SignUp extends StatefulWidget {
-//  final Function? toggle;
-  const SignUp({
-    Key? key,
-  }) : super(key: key);
+  final Function? toggle;
+  const SignUp({Key? key, this.toggle}) : super(key: key);
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -175,8 +173,8 @@ class _SignUpState extends State<SignUp> {
                               fontWeight: FontWeight.bold),
                         ),
                         onTap: () {
-                          print("Already Tapped");
-                          // widget.toggle!();
+                          // print("Already Tapped");
+                          widget.toggle!();
                           // Navigator.of(context).push(MaterialPageRoute(
                           //     builder: (context) => const SignIn()));
                           // print("Already Have Tapped");

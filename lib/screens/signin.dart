@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:validators/validators.dart';
 
 class SignIn extends StatefulWidget {
-  // final Function? toggle;
-  const SignIn({
-    Key? key,
-  }) : super(key: key);
+  final Function? toggle;
+  const SignIn({Key? key, this.toggle})
+      : super(
+          key: key,
+        );
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -106,15 +107,15 @@ class _SignInState extends State<SignIn> {
                   },
                 ),
                 InkWell(
-                  child: btns("Sign Up"),
-                  onTap: () {
-                    // print("Signup Tapped");
-                    // widget.toggle!();
+                    child: btns("Sign Up"),
+                    onTap: () {
+                      // print("Signup Tapped");
+                      widget.toggle!();
 
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const SignUp()));
-                  },
-                ),
+                      //   Navigator.of(context).push(MaterialPageRoute(
+                      //       builder: (context) => const SignUp()));
+                      // },
+                    }),
               ],
             ),
           ),
