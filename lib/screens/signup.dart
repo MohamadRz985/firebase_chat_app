@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_chat_make/screens/chatRoom.dart';
 import 'package:firebase_chat_make/services/auth.dart';
+import 'package:firebase_chat_make/services/database.dart';
 import 'package:firebase_chat_make/widgets/myWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:validators/validators.dart';
@@ -15,6 +16,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  DatabaseMethods dbm = DatabaseMethods();
   AuthMethods auth = AuthMethods();
   var userNameController = TextEditingController();
   var userEmailController = TextEditingController();
@@ -34,26 +36,24 @@ class _SignUpState extends State<SignUp> {
       auth
           .signUpWithEmail(userEmailController.text, userPassController.text)
           .then((value) {
-        print("the value is :$value");
+        // print("the value is :$value");
+        Map<String, String> userInfoMap = {
+          "userName": userNameController.text,
+          "userEmail": userEmailController.text,
+          "userPassword": userPassController.text,
+          "userPhoneNumber": userPhoneController.text
+        };
+        dbm.uploadUserData(userInfoMap);
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => const ChatRoom()));
       });
     }
-
-    // if (formKey.currentState!.validate()) {
-    //   Map<String, String> userInfoMap = {
-    //     "userName": userNameController.text,
-    //     "userEmail": userEmailController.text,
-    //     "userPassword": userPassController.text,
-    //     "userPhoneNumber": userPhoneController.text
-    //   };
-    // }
   }
 
-  //     // //!Use SharedPrefrences to save USer data from SignupFields==========
-  //     // HelperFunctions.saveUserEmailSharedPref(userNameController.text);
-  //     // HelperFunctions.saveUserEmailSharedPref(userEmailController.text);
-  //     // HelperFunctions.saveUserPassSharedPref(userPassController.text);
+  // //!Use SharedPrefrences to save USer data from SignupFields==========
+  // HelperFunctions.saveUserEmailSharedPref(userNameController.text);
+  // HelperFunctions.saveUserEmailSharedPref(userEmailController.text);
+  // HelperFunctions.saveUserPassSharedPref(userPassController.text);
   //     setState(() {
   //       isLoading = true;
   //     });
