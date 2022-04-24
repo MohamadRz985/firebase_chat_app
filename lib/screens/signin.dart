@@ -32,14 +32,15 @@ class _SignInState extends State<SignIn> {
   logInFunc() {
     if (formKey.currentState!.validate()) {
       SPHelper.saveUserEmailSharedPref(userEmailController.text);
-      SPHelper.saveUserPassSharedPref(userPassController.text);
-      setState(() {
-        isLoading = true;
-      });
+      //  SPHelper.saveUserPassSharedPref(userPassController.text);
+
       dbm.getUsersbyUserEmail(userEmailController.text).then((value) {
         snapshotUserInfo = value;
         SPHelper.saveUserNameSharedPref(
             snapshotUserInfo!.docs[0].get("userName"));
+        setState(() {
+          isLoading = true;
+        });
       });
       auth
           .signInWithEmail(userEmailController.text, userPassController.text)
