@@ -38,7 +38,7 @@ class _SignInState extends State<SignIn> {
       });
       dbm.getUsersbyUserEmail(userEmailController.text).then((value) {
         snapshotUserInfo = value;
-        SPHelper.saveUserEmailSharedPref(
+        SPHelper.saveUserNameSharedPref(
             snapshotUserInfo!.docs[0].get("userName"));
       });
       auth

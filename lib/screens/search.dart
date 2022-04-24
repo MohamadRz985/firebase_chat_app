@@ -22,7 +22,7 @@ class _SearchScreenState extends State<SearchScreen> {
   //! Create Chatroom ,send User to conversation ========
 
   createChatroomStartConversation(String userName) {
-    if (userName == MyConstants.myName) {
+    if (userName != MyConstants.myName) {
       String chatroomID = getChatRoomId(userName, MyConstants.myName);
       List<String> users = [userName, MyConstants.myName];
       Map<String, dynamic> chatRoomMap = {
