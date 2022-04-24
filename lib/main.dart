@@ -1,6 +1,4 @@
 import 'package:firebase_chat_make/helper/authenticat.dart';
-import 'package:firebase_chat_make/screens/signIn.dart';
-import 'package:firebase_chat_make/screens/signup.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 

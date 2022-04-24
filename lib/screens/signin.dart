@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_chat_make/helper/sphelper.dart';
 import 'package:firebase_chat_make/screens/chatRoom.dart';
 import 'package:firebase_chat_make/screens/signUp.dart';
+import 'package:firebase_chat_make/services/auth.dart';
+import 'package:firebase_chat_make/services/database.dart';
 import 'package:firebase_chat_make/widgets/myWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:validators/validators.dart';
@@ -18,12 +22,44 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   var userPassController = TextEditingController();
   var userEmailController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  bool isLoading = false;
+  AuthMethods auth = AuthMethods();
+  DatabaseMethods dbm = DatabaseMethods();
+  QuerySnapshot? snapshotUserInfo;
+
+  //! E3 -- Make Function To help us Loggin =============
+  logInFunc() {
+    if (formKey.currentState!.validate()) {
+      SPHelper.saveUserEmailSharedPref(userEmailController.text);
+      SPHelper.saveUserPassSharedPref(userPassController.text);
+      setState(() {
+        isLoading = true;
+      });
+      dbm.getUsersbyUserEmail(userEmailController.text).then((value) {
+        snapshotUserInfo = value;
+        SPHelper.saveUserEmailSharedPref(
+            snapshotUserInfo!.docs[0].get("userName"));
+      });
+      auth
+          .signInWithEmail(userEmailController.text, userPassController.text)
+          .then((value) {
+        if (value != null) {
+          SPHelper.saveUserLoggedInSharedPref(true);
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const ChatRoom()));
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
           child: Form(
+            key: formKey,
             child: Column(
               children: [
                 pageName("Login", "Login To Account"),
@@ -31,8 +67,8 @@ class _SignInState extends State<SignIn> {
                 //! TextFields =================
                 Container(
                   margin: const EdgeInsets.fromLTRB(30, 50, 30, 0),
+                  //! Username Field ====
                   child: TextFormField(
-                    ////! Use  Validation here
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Please Enter User Name";
@@ -40,8 +76,8 @@ class _SignInState extends State<SignIn> {
                       if (value.length < 4) {
                         return "Please Enter Valid User Name";
                       }
-                      if (!isAlpha(value)) {
-                        return "Please Enter Valid User Name";
+                      if (!isEmail(value)) {
+                        return "Please Enter Valid UserName";
                       } else {
                         return null;
                       }
@@ -53,8 +89,8 @@ class _SignInState extends State<SignIn> {
                 ),
                 Container(
                   margin: const EdgeInsets.fromLTRB(30, 25, 30, 0),
+                  //! Password Field =========
                   child: TextFormField(
-                    ////! Use  Validation here
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Please Enter Password";
@@ -99,11 +135,12 @@ class _SignInState extends State<SignIn> {
                 InkWell(
                   child: btns("Login"),
                   onTap: () {
+                    logInFunc();
                     // print("Login Tapped");
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ChatRoom()));
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => const ChatRoom()));
                     // print("Login Tapped");
                   },
                 ),

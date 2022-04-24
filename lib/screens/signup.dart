@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_chat_make/helper/sphelper.dart';
 import 'package:firebase_chat_make/screens/chatRoom.dart';
 import 'package:firebase_chat_make/services/auth.dart';
 import 'package:firebase_chat_make/services/database.dart';
@@ -22,17 +23,12 @@ class _SignUpState extends State<SignUp> {
   var userEmailController = TextEditingController();
   var userPassController = TextEditingController();
   var userPhoneController = TextEditingController();
-  // HelperFunctions? helpfunc;
 
-  // DatabaseMethods? data;
   final formKey = GlobalKey<FormState>();
   bool isLoading = false;
-  //!Method for cheking validation of form=========
+  //!Method for cheking validation of for  =========
   signMeUp() {
     if (formKey.currentState!.validate()) {
-      setState(() {
-        isLoading = true;
-      });
       auth
           .signUpWithEmail(userEmailController.text, userPassController.text)
           .then((value) {
@@ -43,7 +39,15 @@ class _SignUpState extends State<SignUp> {
           "userPassword": userPassController.text,
           "userPhoneNumber": userPhoneController.text
         };
+        SPHelper.saveUserEmailSharedPref(userEmailController.text);
+        SPHelper.saveUserNameSharedPref(userNameController.text);
+        SPHelper.saveUserPassSharedPref(userPassController.text);
+
+        setState(() {
+          isLoading = true;
+        });
         dbm.uploadUserData(userInfoMap);
+        SPHelper.saveUserLoggedInSharedPref(true);
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => const ChatRoom()));
       });
@@ -83,7 +87,6 @@ class _SignUpState extends State<SignUp> {
                     Container(
                       margin: const EdgeInsets.fromLTRB(30, 50, 30, 0),
                       child: TextFormField(
-                        ////!use validation here
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Please Enter User Name";
@@ -105,7 +108,6 @@ class _SignUpState extends State<SignUp> {
                     Container(
                       margin: const EdgeInsets.fromLTRB(30, 10, 30, 0),
                       child: TextFormField(
-                        ////!use validation here
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Please Enter Your Number";

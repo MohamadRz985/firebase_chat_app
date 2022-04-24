@@ -1,4 +1,6 @@
 import 'package:firebase_chat_make/helper/authenticat.dart';
+import 'package:firebase_chat_make/helper/myconstanst.dart';
+import 'package:firebase_chat_make/helper/sphelper.dart';
 import 'package:firebase_chat_make/screens/search.dart';
 import 'package:firebase_chat_make/screens/signin.dart';
 import 'package:firebase_chat_make/services/auth.dart';
@@ -13,6 +15,16 @@ class ChatRoom extends StatefulWidget {
 
 class _ChatRoomState extends State<ChatRoom> {
   AuthMethods auth = AuthMethods();
+  @override
+  void initState() {
+    getUserInfo();
+    super.initState();
+  }
+
+  getUserInfo() async {
+    MyConstants.myName = await SPHelper.getUserNameSharedPref().toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
