@@ -1,8 +1,8 @@
+// ignore: file_names
 import 'package:firebase_chat_make/helper/authenticat.dart';
 import 'package:firebase_chat_make/helper/myconstanst.dart';
 import 'package:firebase_chat_make/helper/sphelper.dart';
 import 'package:firebase_chat_make/screens/search.dart';
-import 'package:firebase_chat_make/screens/signin.dart';
 import 'package:firebase_chat_make/services/auth.dart';
 import 'package:flutter/material.dart';
 

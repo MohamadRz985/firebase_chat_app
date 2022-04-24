@@ -22,16 +22,21 @@ class _SearchScreenState extends State<SearchScreen> {
   //! Create Chatroom ,send User to conversation ========
 
   createChatroomStartConversation(String userName) {
-    String chatroomID = getChatRoomId(userName, MyConstants.myName);
-    List<String> users = [userName, MyConstants.myName];
-    Map<String, dynamic> chatRoomMap = {
-      "users": users,
-      "chatroomId": chatroomID
-    };
+    if (userName == MyConstants.myName) {
+      String chatroomID = getChatRoomId(userName, MyConstants.myName);
+      List<String> users = [userName, MyConstants.myName];
+      Map<String, dynamic> chatRoomMap = {
+        "users": users,
+        "chatroomId": chatroomID
+      };
 
-    DatabaseMethods().createChatRoom(chatroomID, chatRoomMap);
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const ConversationPage()));
+      DatabaseMethods().createChatRoom(chatroomID, chatRoomMap);
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const ConversationPage()));
+    } else {
+      print(" You Cannot Message Your Self");
+      //  print(" you cannot message");
+    }
   }
 
   //!SearchList Making ====================
