@@ -102,11 +102,16 @@ class _ConversationPageState extends State<ConversationPage> {
             Container(
               // color: Colors.grey,
               alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                child: Container(
-                  alignment: Alignment.bottomCenter,
+              child: Container(
+                height: 60,
+                width: MediaQuery.of(context).size.width,
+                decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 2, 2, 2),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20))),
+                alignment: Alignment.bottomCenter,
+                child: Center(
                   child: Row(
                     children: [
                       Expanded(
