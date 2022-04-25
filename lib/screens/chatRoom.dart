@@ -22,7 +22,7 @@ class _ChatRoomState extends State<ChatRoom> {
   }
 
   getUserInfo() async {
-    MyConstants.myName = await SPHelper.getUserNameSharedPref().toString();
+    MyConstants.myName = (await SPHelper.getUserNameSharedPref())!;
   }
 
   @override

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_chat_make/helper/sphelper.dart';
 import 'package:firebase_chat_make/screens/chatRoom.dart';
-import 'package:firebase_chat_make/screens/signUp.dart';
 import 'package:firebase_chat_make/services/auth.dart';
 import 'package:firebase_chat_make/services/database.dart';
 import 'package:firebase_chat_make/widgets/myWidgets.dart';
@@ -26,7 +25,7 @@ class _SignInState extends State<SignIn> {
   bool isLoading = false;
   AuthMethods auth = AuthMethods();
   DatabaseMethods dbm = DatabaseMethods();
-  QuerySnapshot? snapshotUserInfo;
+  late QuerySnapshot snapshotUserInfo;
 
   //! E3 -- Make Function To help us Loggin =============
   logInFunc() {
@@ -37,7 +36,7 @@ class _SignInState extends State<SignIn> {
       dbm.getUsersbyUserEmail(userEmailController.text).then((value) {
         snapshotUserInfo = value;
         SPHelper.saveUserNameSharedPref(
-            snapshotUserInfo!.docs[0].get("userName"));
+            snapshotUserInfo.docs[0].get("userName"));
         setState(() {
           isLoading = true;
         });

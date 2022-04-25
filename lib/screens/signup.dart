@@ -41,7 +41,7 @@ class _SignUpState extends State<SignUp> {
         };
         SPHelper.saveUserEmailSharedPref(userEmailController.text);
         SPHelper.saveUserNameSharedPref(userNameController.text);
-        SPHelper.saveUserPassSharedPref(userPassController.text);
+        //SPHelper.saveUserPassSharedPref(userPassController.text);
 
         setState(() {
           isLoading = true;
@@ -53,20 +53,6 @@ class _SignUpState extends State<SignUp> {
       });
     }
   }
-
-  // //!Use SharedPrefrences to save USer data from SignupFields==========
-  // HelperFunctions.saveUserEmailSharedPref(userNameController.text);
-  // HelperFunctions.saveUserEmailSharedPref(userEmailController.text);
-  // HelperFunctions.saveUserPassSharedPref(userPassController.text);
-  //     setState(() {
-  //       isLoading = true;
-  //     });
-  //     ////!Making instance of Auth Class and call signup Method here and pass the text of fields to it
-
-  //     data?.uploadUserInfo(userInfoMap);
-  //     ////! Use "HelperFunctions.saveUserLoggedInSharedPref(true);" after uploading a user
-  //   }
-  // }
 
   bool obsucureTap = false;
 
@@ -175,11 +161,7 @@ class _SignUpState extends State<SignUp> {
                               fontWeight: FontWeight.bold),
                         ),
                         onTap: () {
-                          // print("Already Tapped");
                           widget.toggle!();
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: (context) => const SignIn()));
-                          // print("Already Have Tapped");
                         },
                       ),
                     ),
@@ -189,7 +171,6 @@ class _SignUpState extends State<SignUp> {
                       child: btns("Submit"),
                       onTap: () {
                         signMeUp();
-                        //  print("SignUp Tapped");
                       },
                     )
                   ],

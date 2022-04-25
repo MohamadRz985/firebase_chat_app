@@ -28,4 +28,16 @@ class DatabaseMethods {
       print(e);
     });
   }
+
+  //! Method for returning messages from database ======
+  getConversationMessages(String chatroomId, messageMap) {
+    FirebaseFirestore.instance
+        .collection("ChatRooms")
+        .doc(chatroomId)
+        .collection("chats")
+        .add(messageMap)
+        .catchError((e) {
+      print(e.toString());
+    });
+  }
 }
