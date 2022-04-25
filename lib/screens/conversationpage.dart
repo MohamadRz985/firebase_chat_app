@@ -19,6 +19,7 @@ class _ConversationPageState extends State<ConversationPage> {
   //Stream? chatMessageStream;
   Stream? chats;
 
+//! E4 . Returning Chat List ==============
   Widget chatMessages() {
     return StreamBuilder(
       stream: chats,
@@ -29,7 +30,7 @@ class _ConversationPageState extends State<ConversationPage> {
                 itemBuilder: (context, index) {
                   return MessageTile(
                     message: snapshot.data.docs[index].data()["message"],
-                    sendByMe: MyConstants.myName ==
+                    isSendByMe: MyConstants.myName ==
                         snapshot.data.docs[index].data()["sendBy"],
                   );
                 })
@@ -37,21 +38,6 @@ class _ConversationPageState extends State<ConversationPage> {
       },
     );
   }
-
-  //! E4 . Returning Chat List ==============
-  // Widget chatMessageList() {
-  //   return StreamBuilder(
-  //     builder: ((context, AsyncSnapshot<dynamic> snapshot) {
-  //       return ListView.builder(
-  //         itemCount: snapshot.data.length,
-  //         itemBuilder: (context, index) {
-  //           return MessageTile(message: snapshot.data![index]["message"]);
-  //         },
-  //       );
-  //     }),
-  //     stream: chatMessageStream,
-  //   );
-  // }
 
   //! E4 . for sending messages ==========
   sendMessages() {
@@ -81,8 +67,10 @@ class _ConversationPageState extends State<ConversationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey,
       //!AppBar ==========================
       appBar: AppBar(
+        elevation: 0,
         leading: IconButton(
             onPressed: () {
               Navigator.of(context).pushReplacement(
@@ -95,7 +83,7 @@ class _ConversationPageState extends State<ConversationPage> {
         title: Padding(
           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 4),
           child: const Text(
-            "Search ",
+            "Let`s Talk  ",
             style: TextStyle(
                 color: Colors.blue, fontSize: 20, fontWeight: FontWeight.bold),
           ),
@@ -112,6 +100,7 @@ class _ConversationPageState extends State<ConversationPage> {
             //     width: MediaQuery.of(context).size.width,
             //     child: chatMessageList()),
             Container(
+              // color: Colors.grey,
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding:
@@ -123,10 +112,13 @@ class _ConversationPageState extends State<ConversationPage> {
                       Expanded(
                         //!TextFields ===================
                         child: TextField(
+                          //  enableInteractiveSelection: true,
                           controller: messageInputController,
                           decoration: const InputDecoration(
+                              // hoverColor: Colors.black,
                               hintText: "Message",
-                              hintStyle: TextStyle(color: Colors.black),
+                              hintStyle: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255)),
                               border: InputBorder.none),
                         ),
                       ),
@@ -137,7 +129,10 @@ class _ConversationPageState extends State<ConversationPage> {
                           onPressed: () {
                             sendMessages();
                           },
-                          icon: const Icon(Icons.send_outlined))
+                          icon: const Icon(
+                            Icons.send_outlined,
+                            color: Colors.white,
+                          ))
                     ],
                   ),
                 ),
@@ -150,18 +145,44 @@ class _ConversationPageState extends State<ConversationPage> {
   }
 }
 
-//! MessageTile ==============
+//! MessageTile and shape ==============
 class MessageTile extends StatelessWidget {
-  const MessageTile({Key? key, required this.message, required bool sendByMe})
-      : super(key: key);
+  const MessageTile({
+    Key? key,
+    required this.message,
+    required this.isSendByMe,
+  }) : super(key: key);
   final String message;
+  final bool isSendByMe;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(
-        message,
-        style: const TextStyle(fontWeight: FontWeight.bold),
+      padding: EdgeInsets.only(
+          left: isSendByMe ? 0 : 15, right: isSendByMe ? 15 : 0),
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      width: MediaQuery.of(context).size.width,
+      alignment: isSendByMe ? Alignment.centerRight : Alignment.centerLeft,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        decoration: BoxDecoration(
+            color: isSendByMe ? Colors.green : Colors.blue,
+            borderRadius: isSendByMe
+                ? const BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    topRight: Radius.circular(24),
+                    bottomLeft: Radius.circular(24))
+                : const BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    topRight: Radius.circular(24),
+                    bottomRight: Radius.circular(24))),
+        child: Text(
+          message,
+          style: const TextStyle(
+              //fontWeight: FontWeight.bold,
+              fontSize: 17,
+              color: Color.fromARGB(255, 255, 251, 251)),
+        ),
       ),
     );
   }
