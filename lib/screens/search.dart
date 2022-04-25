@@ -90,8 +90,8 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   //!Making Search Function (This Value is _JsonQuerySnapshot )======
-  initialeSearch() {
-    dbm.getUsersbyUserName(searchUserText.text).then((value) {
+  initialeSearch() async {
+    await dbm.getUsersbyUserName(searchUserText.text).then((value) {
       setState(() {
         searchSnapshot = value;
       });
@@ -101,7 +101,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    // initialeSearch();
+    //initialeSearch();
   }
 
   @override
