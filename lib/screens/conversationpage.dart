@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_chat_make/helper/myconstanst.dart';
 import 'package:firebase_chat_make/screens/chatRoom.dart';
 import 'package:firebase_chat_make/services/database.dart';
@@ -15,18 +16,66 @@ class ConversationPage extends StatefulWidget {
 class _ConversationPageState extends State<ConversationPage> {
   DatabaseMethods dbm = DatabaseMethods();
   var messageInputController = TextEditingController();
+  //Stream? chatMessageStream;
+  Stream? chats;
 
-  // Widget ChatMessageList() {}
+  Widget chatMessages() {
+    return StreamBuilder(
+      stream: chats,
+      builder: (context, AsyncSnapshot snapshot) {
+        return snapshot.hasData
+            ? ListView.builder(
+                itemCount: snapshot.data.docs.length,
+                itemBuilder: (context, index) {
+                  return MessageTile(
+                    message: snapshot.data.docs[index].data()["message"],
+                    sendByMe: MyConstants.myName ==
+                        snapshot.data.docs[index].data()["sendBy"],
+                  );
+                })
+            : Container();
+      },
+    );
+  }
+
+  //! E4 . Returning Chat List ==============
+  // Widget chatMessageList() {
+  //   return StreamBuilder(
+  //     builder: ((context, AsyncSnapshot<dynamic> snapshot) {
+  //       return ListView.builder(
+  //         itemCount: snapshot.data.length,
+  //         itemBuilder: (context, index) {
+  //           return MessageTile(message: snapshot.data![index]["message"]);
+  //         },
+  //       );
+  //     }),
+  //     stream: chatMessageStream,
+  //   );
+  // }
 
   //! E4 . for sending messages ==========
   sendMessages() {
     if (messageInputController.text.isNotEmpty) {
-      Map<String, String> messageMap = {
+      Map<String, dynamic> messageMap = {
         "message": messageInputController.text,
-        "sendBy": MyConstants.myName
+        "sendBy": MyConstants.myName,
+        "time": DateTime.now().millisecondsSinceEpoch
       };
-      dbm.getConversationMessages(widget.chatRoomId, messageMap);
+      dbm.addConversationMessages(widget.chatRoomId, messageMap);
+      messageInputController.text = " ";
     }
+  }
+
+  @override
+  void initState() {
+    //! call this for returning prev messages =====
+    dbm.getConversationMessages(widget.chatRoomId).then((value) {
+      setState(() {
+        chats = value;
+      });
+    });
+    super.initState();
+    // chatMessageList();
   }
 
   @override
@@ -54,40 +103,65 @@ class _ConversationPageState extends State<ConversationPage> {
         backgroundColor: Colors.white,
       ),
       //! Body ===========
-      body: Stack(
-        children: [
-          Container(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-              child: Container(
-                alignment: Alignment.bottomCenter,
-                child: Row(
-                  children: [
-                    Expanded(
-                      //!TextFields ===================
-                      child: TextField(
-                        controller: messageInputController,
-                        decoration: const InputDecoration(
-                            hintText: "Message",
-                            hintStyle: TextStyle(color: Colors.black),
-                            border: InputBorder.none),
+      body: Container(
+        child: Stack(
+          children: [
+            chatMessages(),
+            // Container(
+            //     height: 50,
+            //     width: MediaQuery.of(context).size.width,
+            //     child: chatMessageList()),
+            Container(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                child: Container(
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        //!TextFields ===================
+                        child: TextField(
+                          controller: messageInputController,
+                          decoration: const InputDecoration(
+                              hintText: "Message",
+                              hintStyle: TextStyle(color: Colors.black),
+                              border: InputBorder.none),
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    IconButton(
-                        onPressed: () {
-                          sendMessages();
-                        },
-                        icon: const Icon(Icons.send_outlined))
-                  ],
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            sendMessages();
+                          },
+                          icon: const Icon(Icons.send_outlined))
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+//! MessageTile ==============
+class MessageTile extends StatelessWidget {
+  const MessageTile({Key? key, required this.message, required bool sendByMe})
+      : super(key: key);
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Text(
+        message,
+        style: const TextStyle(fontWeight: FontWeight.bold),
       ),
     );
   }

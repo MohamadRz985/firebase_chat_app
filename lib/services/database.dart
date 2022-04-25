@@ -29,15 +29,24 @@ class DatabaseMethods {
     });
   }
 
-  //! Method for returning messages from database ======
-  getConversationMessages(String chatroomId, messageMap) {
+  //! Method for sending messages from database ======
+  addConversationMessages(String chatroomId, messageMap) {
     FirebaseFirestore.instance
-        .collection("ChatRooms")
+        .collection("Chatrooms")
         .doc(chatroomId)
         .collection("chats")
         .add(messageMap)
         .catchError((e) {
       print(e.toString());
     });
+  }
+
+  getConversationMessages(String chatroomId) async {
+    return await FirebaseFirestore.instance
+        .collection("Chatrooms")
+        .doc(chatroomId)
+        .collection("chats")
+        .orderBy("time", descending: true)
+        .snapshots();
   }
 }
