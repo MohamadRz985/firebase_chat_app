@@ -26,7 +26,7 @@ class _SignUpState extends State<SignUp> {
 
   final formKey = GlobalKey<FormState>();
   bool isLoading = false;
-  //!Method for cheking validation of for  =========
+  //!Method for cheking validation of form for signUp  =========
   signMeUp() {
     if (formKey.currentState!.validate()) {
       auth
@@ -59,6 +59,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: mainBlueColor,
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
@@ -73,6 +74,7 @@ class _SignUpState extends State<SignUp> {
                     Container(
                       margin: const EdgeInsets.fromLTRB(30, 50, 30, 0),
                       child: TextFormField(
+                        style: largeBlackTextStyle(),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Please Enter User Name";
@@ -94,6 +96,7 @@ class _SignUpState extends State<SignUp> {
                     Container(
                       margin: const EdgeInsets.fromLTRB(30, 10, 30, 0),
                       child: TextFormField(
+                        style: largeBlackTextStyle(),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Please Enter Your Number";
@@ -112,7 +115,7 @@ class _SignUpState extends State<SignUp> {
                     Container(
                       margin: const EdgeInsets.fromLTRB(30, 10, 30, 0),
                       child: TextFormField(
-                        ////!use validation here
+                        style: largeBlackTextStyle(),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Please Entere Email";
@@ -132,8 +135,7 @@ class _SignUpState extends State<SignUp> {
                       margin: const EdgeInsets.fromLTRB(30, 10, 30, 0),
                       child: TextFormField(
                         obscureText: true,
-
-                        ////!use validation here
+                        style: largeBlackTextStyle(),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Please Enter Password";
@@ -153,13 +155,13 @@ class _SignUpState extends State<SignUp> {
                     Container(
                       margin: const EdgeInsets.only(top: 30),
                       child: InkWell(
-                        child: const Text(
-                          'Already Have An Account ?',
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        child: Text('Already Have An Account ?',
+                            style: mediumBlackTextStyle()
+                            // TextStyle(
+                            //     fontSize: 15,
+                            //     color: Colors.blue,
+                            //     fontWeight: FontWeight.bold),
+                            ),
                         onTap: () {
                           widget.toggle!();
                         },
