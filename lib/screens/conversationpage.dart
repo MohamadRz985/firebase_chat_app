@@ -112,7 +112,7 @@ class _ConversationPageState extends State<ConversationPage> {
                     child: SizedBox(
                         width: MediaQuery.of(context).size.width / 1.25,
                         child: TextField(
-                          style: textFieldInputTextStyle(),
+                          style: textFieldInputBlackTextStyle(),
                           controller: messageInputController,
                           decoration: InputDecoration(
                             border: InputBorder.none,
@@ -155,7 +155,9 @@ class MessageTile extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         decoration: BoxDecoration(
-            color: isSendByMe ? Colors.green : Colors.deepPurple,
+            color: isSendByMe
+                ? const Color.fromARGB(255, 0, 13, 190)
+                : Colors.deepPurple,
             borderRadius: isSendByMe
                 ? const BorderRadius.only(
                     topLeft: Radius.circular(24),

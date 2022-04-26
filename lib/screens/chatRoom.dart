@@ -127,28 +127,33 @@ class ChatRoomsTile extends StatelessWidget {
                 builder: (context) =>
                     ConversationPage(chatRoomId: chatRoomId)));
       },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 18),
-        child: Row(
-          children: [
-            Container(
-              alignment: Alignment.center,
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                  color: mainRedColor, borderRadius: BorderRadius.circular(40)),
-              child: Text(
-                userName.substring(0, 1).toUpperCase(),
-                style: largeBlackTextStyle(),
+      child: Card(
+        color: mainBlueColor,
+        elevation: 5,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 18),
+          child: Row(
+            children: [
+              Container(
+                alignment: Alignment.center,
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                    color: mainRedColor,
+                    borderRadius: BorderRadius.circular(40)),
+                child: Text(
+                  userName.substring(0, 1).toUpperCase(),
+                  style: largeBlackTextStyle(),
+                ),
               ),
-            ),
-            const SizedBox(
-              width: 12,
-            ),
-            Text(userName, style: largeBlackTextStyle()
-                // const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                )
-          ],
+              const SizedBox(
+                width: 12,
+              ),
+              Text(userName, style: largeBlackTextStyle()
+                  // const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  )
+            ],
+          ),
         ),
       ),
     );

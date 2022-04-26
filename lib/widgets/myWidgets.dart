@@ -103,6 +103,11 @@ TextStyle textFieldInputTextStyle() {
       color: Colors.white, fontWeight: FontWeight.w400, fontSize: 19);
 }
 
+TextStyle textFieldInputBlackTextStyle() {
+  return const TextStyle(
+      color: Colors.black, fontWeight: FontWeight.w500, fontSize: 19);
+}
+
 TextStyle hintTextfieldStyle() {
   return const TextStyle(
       color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18);
