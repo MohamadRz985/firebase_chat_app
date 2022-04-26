@@ -56,6 +56,7 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: mainBlueColor,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Form(
@@ -69,6 +70,7 @@ class _SignInState extends State<SignIn> {
                   margin: const EdgeInsets.fromLTRB(30, 50, 30, 0),
                   //! Username Field ====
                   child: TextFormField(
+                    style: largeBlackTextStyle(),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Please Enter User Name";
@@ -88,9 +90,10 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.fromLTRB(30, 25, 30, 0),
+                  margin: const EdgeInsets.fromLTRB(30, 20, 30, 0),
                   //! Password Field =========
                   child: TextFormField(
+                    style: largeBlackTextStyle(),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Please Enter Password";
@@ -108,51 +111,43 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
 
-                //!CheckBox For Remember=================
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 20, 30, 15),
-                  child: Row(
-                    children: [
-                      Checkbox(
-                        value: false,
-                        onChanged: (bool? value) {
-                          if (value == true) {
-                            value == true;
-                          }
-                        },
-                      ),
-                      const Text(
-                        "Remember My Account",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
+                // //!CheckBox For Remember=================
+                // Padding(
+                //   padding: const EdgeInsets.fromLTRB(30, 20, 30, 15),
+                //   child: Row(
+                //     children: [
+                //       Checkbox(
+                //         value: false,
+                //         onChanged: (bool? value) {
+                //           if (value == true) {
+                //             value == true;
+                //           }
+                //         },
+                //       ),
+                //       const Text(
+                //         "Remember My Account",
+                //         style: TextStyle(
+                //           fontSize: 15,
+                //           color: Colors.black,
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                const SizedBox(
+                  height: 25,
                 ),
                 //!BTNS ==================
                 InkWell(
-                  child: btns("Login"),
+                  child: btns("Login", btnTextStyle()),
                   onTap: () {
                     logInFunc();
-                    // print("Login Tapped");
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => const ChatRoom()));
-                    // print("Login Tapped");
                   },
                 ),
                 InkWell(
-                    child: btns("Sign Up"),
+                    child: btns("Sign Up", btnTextStyle()),
                     onTap: () {
-                      // print("Signup Tapped");
                       widget.toggle!();
-
-                      //   Navigator.of(context).push(MaterialPageRoute(
-                      //       builder: (context) => const SignUp()));
-                      // },
                     }),
               ],
             ),

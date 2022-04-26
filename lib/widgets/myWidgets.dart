@@ -32,6 +32,7 @@ Widget pageName(String namePage, String explane) {
 
 InputDecoration fieldDecoration(String hintText, IconData prefixIcon) {
   return InputDecoration(
+      hintStyle: mediumBlackTextStyle(),
       prefixIcon: Icon(
         prefixIcon,
         color: Colors.red,
@@ -39,7 +40,7 @@ InputDecoration fieldDecoration(String hintText, IconData prefixIcon) {
       hintText: hintText,
       enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
-            color: Colors.grey,
+            color: Colors.white,
             width: 1.5,
           ),
           borderRadius: BorderRadius.circular(10)));
@@ -47,17 +48,13 @@ InputDecoration fieldDecoration(String hintText, IconData prefixIcon) {
 
 //! 3.BTNs============
 
-Widget btns(String btnName) {
+Widget btns(String btnName, TextStyle style) {
   return Container(
       width: 300,
       height: 50,
       alignment: Alignment.center,
       margin: const EdgeInsets.only(top: 25),
-      child: Text(btnName,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-          )),
+      child: Text(btnName, style: style),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: Colors.red,
@@ -89,6 +86,11 @@ Color mainRedColor = const Color.fromARGB(216, 223, 30, 30);
 TextStyle mediumTextStyle() {
   return const TextStyle(
       color: Colors.white, fontWeight: FontWeight.w400, fontSize: 18);
+}
+
+TextStyle btnTextStyle() {
+  return const TextStyle(
+      color: Colors.white, fontWeight: FontWeight.w600, fontSize: 19);
 }
 
 TextStyle largeTextStyle() {

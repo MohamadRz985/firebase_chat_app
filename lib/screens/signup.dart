@@ -168,7 +168,7 @@ class _SignUpState extends State<SignUp> {
 
                     //! BTNS===========
                     InkWell(
-                      child: btns("Submit"),
+                      child: btns("Submit", btnTextStyle()),
                       onTap: () {
                         signMeUp();
                       },

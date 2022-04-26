@@ -72,6 +72,7 @@ class _ChatRoomState extends State<ChatRoom> {
           elevation: 0,
           leading: IconButton(
               onPressed: () {
+                auth.signOut();
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => const Authenticate()));
               },
