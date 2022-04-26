@@ -82,3 +82,38 @@ Widget btns(String btnName) {
       // ),
       );
 }
+
+Color mainBlueColor = const Color.fromARGB(255, 121, 190, 236);
+Color mainRedColor = const Color.fromARGB(216, 223, 30, 30);
+
+TextStyle mediumTextStyle() {
+  return const TextStyle(
+      color: Colors.white, fontWeight: FontWeight.w400, fontSize: 18);
+}
+
+TextStyle largeTextStyle() {
+  return const TextStyle(
+      color: Colors.white, fontWeight: FontWeight.bold, fontSize: 19);
+}
+
+TextStyle textFieldInputTextStyle() {
+  return const TextStyle(
+      color: Colors.white, fontWeight: FontWeight.w400, fontSize: 19);
+}
+
+TextStyle hintTextfieldStyle() {
+  return const TextStyle(
+      color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18);
+}
+
+TextStyle mediumBlackTextStyle() {
+  return const TextStyle(
+      color: Colors.black, fontWeight: FontWeight.w400, fontSize: 18);
+}
+
+TextStyle largeBlackTextStyle() {
+  return const TextStyle(
+      color: Colors.black, fontWeight: FontWeight.w600, fontSize: 18);
+}
+
+Color mainCardColor = const Color.fromARGB(115, 81, 119, 243);

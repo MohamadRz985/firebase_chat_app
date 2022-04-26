@@ -5,6 +5,7 @@ import 'package:firebase_chat_make/screens/conversationpage.dart';
 import 'package:firebase_chat_make/screens/search.dart';
 import 'package:firebase_chat_make/services/auth.dart';
 import 'package:firebase_chat_make/services/database.dart';
+import 'package:firebase_chat_make/widgets/myWidgets.dart';
 import 'package:flutter/material.dart';
 
 class ChatRoom extends StatefulWidget {
@@ -33,7 +34,10 @@ class _ChatRoomState extends State<ChatRoom> {
                     userName: snapshot.data.docs[index]
                         .data()["chatroomId"]
                         .toString()
-                        .replaceAll("_", "")
+                        .replaceAll(
+                          "_",
+                          "",
+                        )
                         .replaceAll(MyConstants.myName, ""),
                     chatRoomId: snapshot.data.docs[index].data()["chatroomId"],
                   );
@@ -63,30 +67,30 @@ class _ChatRoomState extends State<ChatRoom> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey,
+        backgroundColor: mainBlueColor,
         appBar: AppBar(
+          elevation: 0,
           leading: IconButton(
               onPressed: () {
-                auth.signOut();
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => const Authenticate()));
               },
               icon: const Icon(
                 Icons.arrow_back,
-                color: Colors.blue,
+                color: Colors.white,
               )),
           title: Padding(
             padding:
-                EdgeInsets.only(left: MediaQuery.of(context).size.width / 6),
+                EdgeInsets.only(left: MediaQuery.of(context).size.width / 3.8),
             child: const Text(
-              "Chat Rooms ",
+              "Chats",
               style: TextStyle(
-                  color: Colors.blue,
+                  color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
             ),
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: mainBlueColor,
         ),
         body: chatRoomLists(),
         floatingActionButton: FloatingActionButton(
@@ -97,8 +101,8 @@ class _ChatRoomState extends State<ChatRoom> {
                 MaterialPageRoute(builder: (context) => const SearchScreen()));
           },
           child: const Icon(
-            Icons.search,
-            color: Colors.blue,
+            Icons.message,
+            color: Colors.black,
           ),
           backgroundColor: Colors.white,
         ));
@@ -123,24 +127,26 @@ class ChatRoomsTile extends StatelessWidget {
                     ConversationPage(chatRoomId: chatRoomId)));
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 18),
         child: Row(
           children: [
             Container(
               alignment: Alignment.center,
-              height: 40,
-              width: 40,
+              height: 50,
+              width: 50,
               decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(40)),
-              child: Text(userName.substring(0, 1).toUpperCase()),
+                  color: mainRedColor, borderRadius: BorderRadius.circular(40)),
+              child: Text(
+                userName.substring(0, 1).toUpperCase(),
+                style: largeBlackTextStyle(),
+              ),
             ),
             const SizedBox(
-              width: 10,
+              width: 12,
             ),
-            Text(
-              userName,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            )
+            Text(userName, style: largeBlackTextStyle()
+                // const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                )
           ],
         ),
       ),

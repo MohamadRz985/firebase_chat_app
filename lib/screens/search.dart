@@ -4,6 +4,7 @@ import 'package:firebase_chat_make/screens/chatRoom.dart';
 import 'package:firebase_chat_make/screens/conversationpage.dart';
 import 'package:firebase_chat_make/services/auth.dart';
 import 'package:firebase_chat_make/services/database.dart';
+import 'package:firebase_chat_make/widgets/myWidgets.dart';
 import 'package:flutter/material.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -38,7 +39,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     chatRoomId: chatroomID,
                   )));
     } else {
-      print(" You Cannot Message Your Self");
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      // print(" You Cannot Message Your Self");
       //  print(" you cannot message");
     }
   }
@@ -58,38 +60,64 @@ class _SearchScreenState extends State<SearchScreen> {
         : Container();
   }
 
+  //! SnackBar ===========
+  SnackBar snackBar = SnackBar(
+    content: Text(
+      "You Canot Message Your Self",
+      style: mediumTextStyle(),
+    ),
+    backgroundColor: mainRedColor,
+    duration: const Duration(seconds: 4),
+  );
+
   //! widget for making searchlist Tile ============
   Widget searchTile({required String userName, required String userEmail}) {
-    return Container(
-      child: Row(children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              userName,
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Text(userEmail)
-          ],
-        ),
-        const Spacer(),
-        InkWell(
-          onTap: () {
-            createChatroomStartConversation(userName);
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-            child: const Text(
-              "Message",
-              style: TextStyle(color: Colors.white, fontSize: 17),
-            ),
-            decoration: BoxDecoration(
-                color: Colors.blue, borderRadius: BorderRadius.circular(30)),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: Card(
+        color: mainCardColor,
+        elevation: 10,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
+          child: SizedBox(
+            child: Row(children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    userName,
+                    style: mediumBlackTextStyle(),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    userEmail,
+                    style: mediumBlackTextStyle(),
+                  )
+                ],
+              ),
+              const Spacer(),
+              InkWell(
+                onTap: () {
+                  createChatroomStartConversation(userName);
+                },
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                  child: const Text(
+                    "Message",
+                    style: TextStyle(color: Colors.white, fontSize: 17),
+                  ),
+                  decoration: BoxDecoration(
+                      color: mainRedColor,
+                      borderRadius: BorderRadius.circular(30)),
+                ),
+              )
+            ]),
           ),
-        )
-      ]),
+        ),
+      ),
     );
   }
 
@@ -111,27 +139,28 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: mainBlueColor,
       //!AppBar ==========================
       appBar: AppBar(
+        elevation: 0,
         leading: IconButton(
             onPressed: () {
-              auth.signOut();
               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => const ChatRoom()));
             },
             icon: const Icon(
               Icons.arrow_back,
-              color: Colors.blue,
+              color: Colors.white,
             )),
         title: Padding(
           padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 4),
           child: const Text(
             "Search ",
             style: TextStyle(
-                color: Colors.blue, fontSize: 20, fontWeight: FontWeight.bold),
+                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: mainBlueColor,
       ),
       //!Body ==============
       body: Column(
@@ -143,10 +172,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 Expanded(
                   //!TextFields ===================
                   child: TextField(
+                    style: largeBlackTextStyle(),
                     controller: searchUserText,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         hintText: "Search User Name",
-                        hintStyle: TextStyle(color: Colors.black),
+                        hintStyle: mediumTextStyle(),
                         border: InputBorder.none),
                   ),
                 ),
@@ -157,7 +187,11 @@ class _SearchScreenState extends State<SearchScreen> {
                     onPressed: () {
                       initialeSearch();
                     },
-                    icon: const Icon(Icons.search))
+                    icon: const Icon(
+                      Icons.search,
+                      color: Colors.white,
+                      size: 35,
+                    ))
               ],
             ),
           ),
@@ -170,7 +204,7 @@ class _SearchScreenState extends State<SearchScreen> {
             child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: searchList()),
-          )
+          ),
         ],
       ),
     );
